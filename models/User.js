@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
     informDaily: { type: Boolean, default: false },
+    informed: { type: Boolean, default: false },
     division: { type: mongoose.Schema.Types.ObjectId, ref: "Division" },
     department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
     designation: { type: mongoose.Schema.Types.ObjectId, ref: "Designation" },

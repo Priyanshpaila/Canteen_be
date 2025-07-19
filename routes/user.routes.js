@@ -18,5 +18,6 @@ router.patch('/inform-daily', userController.updateInformDaily);
 
 // 🔐 Superadmin Only
 router.patch('/update-role', restrictTo('superadmin'), userController.updateUserRole);
+router.delete('/:userId', protect, restrictTo('superadmin'), userController.deleteUser); // ✅ Delete user
 
 module.exports = router;

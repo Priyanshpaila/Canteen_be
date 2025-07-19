@@ -33,7 +33,7 @@ exports.protect = async (req, res, next) => {
       .select('-pin')
       .populate(['division', 'department', 'designation']);
 
-    if (!user || !user.isActive) {
+    if (!user ) {
       return res
         .status(401)
         .json({ message: 'Unauthorized: User not found or deactivated' });

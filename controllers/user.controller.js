@@ -160,3 +160,21 @@ exports.updateUserRole = async (req, res) => {
     res.status(500).json({ message: 'Failed to update role', error: err.message });
   }
 };
+
+// ✅ Superadmin: Delete a User
+exports.deleteUser = async (req, res) => {
+  try {
+    if (req.user.canteenRole !== 'superadmin') {
+      return res.status(403).json({ message: 'Only Superadmin can delete users.' });
+    }
+
+    const { userId } = req.params;
+
+    const deleted = await User.findByIdAndDelete(userId);
+    if (!deleted) return res.status(404).json({ message: 'User not found' });
+
+    res.json({ message: 'User deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to delete user', error: err.message });
+  }
+};
