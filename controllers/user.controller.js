@@ -11,6 +11,7 @@ exports.signUp = async (req, res) => {
     const {
       phoneNumber,
       pin,
+      empid,
       fullName,
       division,
       department,
@@ -24,9 +25,11 @@ exports.signUp = async (req, res) => {
     const user = await User.create({
       phoneNumber,
       pin,
+      empid,
       fullName,
       canteenRole: "user",
       informDaily: false,
+      informed: false,
       division,
       department,
       designation,
@@ -178,3 +181,39 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ message: 'Failed to delete user', error: err.message });
   }
 };
+
+
+// ✅ Manually Mark User as Informed
+exports.markAsInformed = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const user = await User.findById(userId);
+    if (!user || !user.informDaily) {
+      return res.status(400).json({ message: "Only manual-mode users can mark themselves informed." });
+    }
+
+    user.informed = true;
+    await user.save();
+
+    res.json({ message: "User marked as informed for today." });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to mark informed", error: err.message });
+  }
+};
+
+
+// ✅ Get List of Users Who Informed Today (manual only)
+exports.getInformedUsers = async (req, res) => {
+  try {
+    const users = await User.find({
+      informDaily: true,
+      informed: true,
+    }).select('fullName division department designation');
+
+    res.json({ count: users.length, users });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch informed users", error: err.message });
+  }
+};
+

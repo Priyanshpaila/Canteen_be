@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema(
   {
     phoneNumber: { type: String, required: true, unique: true },
     pin: { type: String, required: true },
+    empid: { type: String, required: true, unique: true },
     fullName: { type: String, required: true },
     canteenRole: {
       type: String,
@@ -16,7 +17,6 @@ const userSchema = new mongoose.Schema(
     division: { type: mongoose.Schema.Types.ObjectId, ref: "Division" },
     department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
     designation: { type: mongoose.Schema.Types.ObjectId, ref: "Designation" },
-    signatureUrl: String,
   },
   { timestamps: true }
 );
