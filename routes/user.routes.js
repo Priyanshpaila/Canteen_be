@@ -11,7 +11,7 @@ router.post('/login', userController.login);
 router.use(protect);
 
 router.get('/me',protect, userController.getProfile);
-router.put('/profile',protect, userController.updateProfile);
+router.put('/update-profile',protect, userController.updateProfile);
 router.put('/change-pin',protect, userController.changePin);
 router.post('/logout',protect, userController.logout);
 router.patch('/inform-daily',protect, userController.updateInformDaily);
