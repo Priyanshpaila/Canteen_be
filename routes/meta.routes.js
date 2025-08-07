@@ -13,24 +13,27 @@ const Designation = require('../models/Designation');
 
 const router = express.Router();
 
-// All routes protected -> superadmin only
+
+
+// Public GET routes (accessible to all authenticated users)
+router.get('/division', getAllItems(Division));
+router.get('/department', getAllItems(Department));
+router.get('/designation', getAllItems(Designation));
+
 router.use(protect, restrictTo('superadmin'));
 
-// Division
+// Division (restricted)
 router.post('/division', createItem(Division));
-router.get('/division', getAllItems(Division));
 router.put('/division/:id', updateItem(Division));
 router.delete('/division/:id', deleteItem(Division));
 
-// Department
+// Department (restricted)
 router.post('/department', createItem(Department));
-router.get('/department', getAllItems(Department));
 router.put('/department/:id', updateItem(Department));
 router.delete('/department/:id', deleteItem(Department));
 
-// Designation
+// Designation (restricted)
 router.post('/designation', createItem(Designation));
-router.get('/designation', getAllItems(Designation));
 router.put('/designation/:id', updateItem(Designation));
 router.delete('/designation/:id', deleteItem(Designation));
 
