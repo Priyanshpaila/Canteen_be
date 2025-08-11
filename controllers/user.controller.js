@@ -217,3 +217,22 @@ exports.getInformedUsers = async (req, res) => {
   }
 };
 
+// ✅ Superadmin: Get All Users
+exports.getAllUsers = async (req, res) => {
+  try {
+    if (req.user.canteenRole !== 'superadmin') {
+      return res.status(403).json({ message: 'Only Superadmin can view all users.' });
+    }
+
+    const users = await User.find()
+      .select('-pin -__v') // exclude sensitive fields
+      .populate('division', 'name')
+      .populate('department', 'name')
+      .populate('designation', 'name')
+      .sort({ fullName: 1 });
+
+    res.json({ count: users.length, users });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch users', error: err.message });
+  }
+};

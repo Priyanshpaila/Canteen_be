@@ -23,5 +23,6 @@ router.get('/informed-users', protect, restrictTo('admin', 'superadmin'), userCo
 // 🔐 Superadmin Only
 router.patch('/update-role', restrictTo('superadmin'), userController.updateUserRole);
 router.delete('/:userId', protect, restrictTo('superadmin'), userController.deleteUser); // ✅ Delete user
+router.get('/users', protect, restrictTo('superadmin'), userController.getAllUsers);
 
 module.exports = router;

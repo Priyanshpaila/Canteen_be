@@ -14,7 +14,7 @@ exports.createItem = (Model) => async (req, res) => {
 exports.getAllItems = (Model) => async (req, res) => {
   try {
     const items = await Model.find().sort({ name: 1 });
-    res.json(items);
+    res.json({ count: items.length, items });
   } catch (err) {
     res.status(500).json({ message: 'Fetch failed', error: err.message });
   }
